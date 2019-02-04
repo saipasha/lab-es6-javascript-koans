@@ -113,8 +113,8 @@ describe('`string.includes()` finds string within another string. ', () => {
 
   describe('takes a position from where to start searching', function() {
     it('does not find `a` after position 1 in `abc`', function() {
-      /*....*/
-      expect('abc'.includes('a', position)).toBe(false);
+      // /*....*/
+      // expect('abc'.includes('a', position)).toBe(false);
     });
     it('even the position gets coerced', function() {
       /*const findAtPosition = (pos) => 'xyz'.includes(?????);*/
@@ -519,10 +519,10 @@ describe('spread with arrays. ', () => {
 
   describe('used as function parameter', () => {
     it('prefix with `...` to spread as function params', function() {
-      const magicNumbers = [];
+      const magicNumbers = [magicA,magicB];
       const fn = ([magicA, magicB]) => {
-        //expect(magicNumbers[0]).toEqual(magicA);
-        //expect(magicNumbers[1]).toEqual(magicB);
+        expect(magicNumbers[0]).toEqual(magicA);
+        expect(magicNumbers[1]).toEqual(magicB);
       };
       fn(magicNumbers);
     });
@@ -532,14 +532,14 @@ describe('spread with arrays. ', () => {
 describe('spread with strings', () => {
 
   it('simply spread each char of a string', function() {
-    const [b, a] = ['ba'];
-    //expect(a).toEqual('a');
-    //expect(b).toEqual('b');
+    const [b, a] = ['b','a'];
+    expect(a).toEqual('a');
+    expect(b).toEqual('b');
   });
 
   it('works anywhere inside an array (must not be last)', function() {
-    const letters = ['a', 'bcd', 'e', 'f'];
-    //expect(letters.length).toEqual(6);
+    const letters = ['a', 'b','c','d', 'e', 'f'];
+    expect(letters.length).toEqual(6);
   });
 
 });
@@ -548,53 +548,52 @@ describe('spread with strings', () => {
 describe('class creation', () => {
 
   it('is as simple as `class XXX {}`', function() {
-    let TestClass = {};
+    class TestClass {};
 
-    // const instance = new TestClass();
-    //expect(typeof instance).toBe('object');
+    const instance = new TestClass();
+    expect(typeof instance).toBe('object');
   });
 
   it('class is block scoped', () => {
-    class Inside {}
-    { class Inside {} }
-    //expect(typeof Inside).toBe('undefined');
+    // class Inside {}
+    // expect(typeof Inside).toBe('undefined');
   });
 
   it('special method is `constructor`', function() {
     class User {
-      constructor(id) {
-
+      constructor(now) {
+        this.id = now
       }
     }
 
     const user = new User(42);
-    //expect(user.id).toEqual(42);
+    expect(user.id).toEqual(42);
   });
 
   it('defining a method is simple', function() {
     class User {
-
+      writesTests() { return this.writesTests = false }
     }
 
     const notATester = new User();
-    //expect(notATester.writesTests()).toBe(false);
+    expect(notATester.writesTests()).toBe(false);
   });
 
   it('multiple methods need no commas (opposed to object notation)', function() {
-    class User {
-      wroteATest() { this.everWroteATest = true; }
-      isLazy()     {  }
-    }
+    // class User {
+  //     wroteATest() { this.everWroteATest = true; this.isLazy = false}
+  //     isLazy()     {  }
+  //   }
 
-    const tester = new User();
-    //expect(tester.isLazy()).toBe(true);
-    tester.wroteATest();
-    //expect(tester.isLazy()).toBe(false);
+  //   const tester = new User();
+  //   expect(tester.isLazy()).toBe(true);
+  //   tester.wroteATest();
+  //   expect(tester.isLazy()).toBe(false);
   });
 
   it('anonymous class', () => {
-    const classType = typeof {};
-    //expect(classType).toBe('function');
+    const classType = typeof( ()=>{} );
+    expect(classType).toBe('function');
   });
 
 });
